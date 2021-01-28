@@ -2,6 +2,7 @@ package DP;
 
 import java.util.Scanner;
 
+//2xn 타일 채우기 2
 public class p_11727 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
