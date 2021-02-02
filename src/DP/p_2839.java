@@ -2,6 +2,7 @@ package DP;
 
 import java.util.Scanner;
 
+//3, 5kg 봉지에 설탕 담기
 public class p_2839 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
