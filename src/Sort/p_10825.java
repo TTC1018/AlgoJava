@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+//국영수 점수 정렬
 public class p_10825 {
     private static class Student implements Comparable<Student>{
         private String name;
