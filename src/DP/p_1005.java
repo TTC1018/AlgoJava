@@ -40,6 +40,7 @@ public class p_1005 {
             int w = Integer.parseInt(br.readLine());
 
             //알고리즘 시작
+            //걸리는 시간이 0인 경우는 어떻게 할 것인지??
             int dp[] = new int[n+1];
             dp[0] = 0;
             dp[1] = d[1];
