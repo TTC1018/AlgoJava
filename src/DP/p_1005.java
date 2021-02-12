@@ -3,6 +3,7 @@ package DP;
 import java.io.*;
 import java.util.ArrayList;
 
+//ACM Craft (순서가 있는 건물 짓기)
 public class p_1005 {
     private static int t;
     private static int n;
