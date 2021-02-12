@@ -8,7 +8,7 @@ public class p_1005 {
     private static int n;
     private static int k;
     private static int d[];
-    private static ArrayList<ArrayList> map;
+    private static ArrayList map[];
     private static int w;
     private static int dp[];
     private static int answer[];
@@ -34,13 +34,13 @@ public class p_1005 {
             //ArrayList의 각 index에 ArrayList를 두고 그것들이 가능한 건물 순서를 저장
             //예) index = (3-1)에 존재하는 AL은
             //x -> 3의, 생성되기 이전의 건물 'x'를 저장함
-            map = new ArrayList<ArrayList>();
-            for(int i=0; i<n; i++) map.add(new ArrayList<Integer>());
+            map = new ArrayList[n];
+            for(int i=0; i<n; i++) map[i] = new ArrayList<Integer>();
             for(int i=0; i<k; i++){
                 temp = br.readLine().split(" ");
                 int prevB = Integer.parseInt(temp[0]);
                 int nextB = Integer.parseInt(temp[1]);
-                map.get(nextB-1).add(prevB);
+                map[nextB-1].add(prevB);
             }
 
             // 목표 건물 번호
@@ -48,6 +48,7 @@ public class p_1005 {
 
             //알고리즘 시작
             dp = new int[n+1];
+            for(int i=1; i<=n; i++) dp[i] = -1;
             answer[p] = solve(w);
         }
 
@@ -56,14 +57,18 @@ public class p_1005 {
     }
 
     private static int solve(int n){
-        ArrayList<Integer> prevNums = map.get(n-1);
-        int listSize = prevNums.size();
-        int prevMax = 0;
-        for(int i=0; i<listSize; i++){
-            prevMax = Math.max(prevMax, solve(prevNums.get(i)));
-        }
-        dp[n] = prevMax + d[n];
+        if(dp[n] == -1){
+            ArrayList<Integer> prevNums = map[n-1];
+            int listSize = prevNums.size();
+            int prevMax = 0;
+            for(int i=0; i<listSize; i++){
+                prevMax = Math.max(prevMax, solve(prevNums.get(i)));
+            }
+            dp[n] = prevMax + d[n];
 
-        return dp[n];
+            return dp[n];
+        }else{
+            return dp[n];
+        }
     }
 }
