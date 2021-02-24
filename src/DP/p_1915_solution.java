@@ -2,6 +2,7 @@ package DP;
 
 import java.io.*;
 
+//가장 큰 정사각형 만들기
 public class p_1915_solution {
 
     static int n, m;
