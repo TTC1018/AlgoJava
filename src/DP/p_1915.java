@@ -6,6 +6,7 @@ public class p_1915 {
 
     static int n, m;
     static int[][] arr, dp;
+    //2차원 dp행렬
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -25,34 +26,50 @@ public class p_1915 {
             }
         }
 
-
+        solve(n, m);
+        bw.write(Integer.toString(dp[n][m]));
+        bw.flush();
     }
 
     private static int solve(int x, int y){
         if(dp[x][y] != -1) return dp[x][y];
         else{
             if(x==1 || y==1){
-                if(arr[x][y] == 1){
-                    dp[x][y] = 1;
-                    return dp[x][y];
-                }
-                else{
-                    int max = 0;
-                    if(x == 1){
-                        for(int i=0; i<y; i++){
-                            max = Math.max(max, dp[1][y]);
-                        }
-                    }
-                    else if(y == 1){
-                        for(int i=0; i<x; i++){
-                            max = Math.max(max, dp[x][1]);
-                        }
-                    }
-                    return max;
-                }
+                if(arr[x][y] != 1) dp[x][y] = 0;
+                else dp[x][y] = 1;
+
+                return dp[x][y]; // dp[x][y] = 1 or 0
             }
             else{
+                dp[x][y] = 0;
+                int max = dp[x][y];
+                int limit = Math.min(x, y);
+                //행,열 중 더 작은 수 저장
+                //정사각형의 최대 크기는 더 작은 수가 결정하기 때문
 
+                for(int i=x; i>=1; i--){ //자기보다 아래에 사각형 존재하는지 확인
+                    for(int j=y; j>=1; j--){
+                        max = Math.max(max, solve(i, j));
+                    }
+                    if(max >= Math.pow(limit, 2)){ //이미 가능한 최대치면 메소드 종료
+                        dp[x][y] = max;
+                        return dp[x][y];
+                    }
+                }
+                dp[x][y] = max;
+
+                if(max < Math.pow(limit, 2)){
+                    for(int k=1; k<=limit; k++){
+                        for(int i=x; i>x-k; i--){
+                            for(int j=y; j>y-k; j--){
+                                if(arr[i][j] != 1) return dp[x][y];
+                            }
+                        }
+                        max = (int) Math.max(max, Math.pow(k, 2));
+                        if(max > dp[x][y]) dp[x][y] = max;
+                    }
+                }
+                return dp[x][y];
             }
         }
     }
