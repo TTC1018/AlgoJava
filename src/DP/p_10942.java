@@ -22,14 +22,11 @@ public class p_10942 {
         }
 
         m = Integer.parseInt(br.readLine());
-
         for(int i=0; i<m; i++){
             temp = br.readLine().split(" ");
             s = Integer.parseInt(temp[0]);
             e = Integer.parseInt(temp[1]);
-
-            int pd[] = Arrays.copyOfRange(arr, s-1, e);
-            bw.write(Integer.toString(solve(pd)));
+            bw.write(Integer.toString(solve(Arrays.copyOfRange(arr, s-1, e))));
             bw.flush();
         }
     }
