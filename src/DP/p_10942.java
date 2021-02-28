@@ -8,17 +8,34 @@ public class p_10942 {
 
     static int n, m, s ,e;
     static int arr[];
+    static int dp[][];
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         n = Integer.parseInt(br.readLine());
-        arr = new int[n];
+        arr = new int[n+1];
+        dp = new int[n+1][n+1];
 
         String temp[] = br.readLine().split(" ");
-        for(int i=0; i<n; i++){
-            arr[i] = Integer.parseInt(temp[i]);
+        for(int i=1; i<=n; i++){
+            arr[i] = Integer.parseInt(temp[i-1]);
+        }
+
+        //길이 1인 케이스
+        for(int i=1; i<=n; i++) dp[i][i] = 1;
+        //길이 2인 케이스
+        for(int i=1; i<=n-1; i++){
+            if(arr[i]==arr[i+1]) dp[i][i+1] = 1;
+            else dp[i][i+1] = 0;
+        }
+        //길이 3이상인 케이스
+        for(int i=n-2; i>=1; i--){
+            for(int j=n; j>=i+2; j--){
+                if(arr[i] == arr[j] && dp[i+1][j-1] == 1) dp[i][j] = 1;
+                else dp[i][j] = 0;
+            }
         }
 
         m = Integer.parseInt(br.readLine());
@@ -26,40 +43,8 @@ public class p_10942 {
             temp = br.readLine().split(" ");
             s = Integer.parseInt(temp[0]);
             e = Integer.parseInt(temp[1]);
-            bw.write(Integer.toString(solve(Arrays.copyOfRange(arr, s-1, e))));
-            bw.flush();
+            bw.write(dp[s][e] + "\n");
         }
-    }
-
-    private static int solve(int input_arr[]){
-        int nums[] = input_arr;
-        int len = nums.length;
-        int dp[];
-
-        if(len==1) return 1;
-        else if(len==2){
-            if(nums[0] == nums[1]) return 1;
-            else return 0;
-        }
-
-        if(len%2 != 0){
-            dp = new int[len/2+1];
-            dp[0] = 1;
-            for(int i=1; i<(len/2)+1; i++){
-                if(nums[(len/2) - i] == nums[(len/2) + i] && dp[i-1] == 1) dp[i] = 1;
-                else return 0;
-            }
-            return dp[len/2];
-        }else{
-            dp = new int[len/2];
-            if(nums[len/2-1] == nums[len/2]) dp[0] = 1;
-            else return 0;
-
-            for(int i=1; i<len/2; i++){
-                if(nums[len/2 - i] == nums[(len/2)+1 + i] && dp[i-1] == 1) dp[i] = 1;
-                else return 0;
-            }
-            return dp[len/2 - 1];
-        }
+        bw.flush();
     }
 }
