@@ -44,8 +44,10 @@ public class p_9012 {
                 }
             }
 
-            if(answer) bw.write("YES\n");
-            else bw.write("NO\n");
+            if(answer)
+                bw.write("YES\n");
+            else
+                bw.write("NO\n");
             bw.flush();
         }
     }
